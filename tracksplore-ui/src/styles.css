@@ -24,7 +24,7 @@ body {
 }
 
 main {
-    max-width: 40%;
+    max-width: 800px;
     margin: 0 auto;
     background-color: #F3F0F9;
     padding: 40px;

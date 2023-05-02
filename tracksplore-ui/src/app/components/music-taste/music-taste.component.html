@@ -1,0 +1,16 @@
+<main>
+    <h1 class="title">Your Music Taste</h1>
+    <div class="fluid-grid">
+        <div class="music-taste" *ngFor="let artistGroup of artistGroups; let i = index">
+            <div *ngIf="artistGroup.isDisabled" class="music-taste-disabled"></div>
+                <h3 class="music-taste-title"><span class="tag" *ngFor="let genre of artistGroup.relatedGenres">{{ genre.name }}</span></h3>
+                <div class="flex-filler"></div>
+                <div>
+                    <p class="music-taste-artist" *ngFor="let artist of artistGroup.artists">{{ artist.name }}</p>
+                </div>
+                <button *ngIf="!artistGroup.isDisabled" class="form-button music-taste-button" (click)="toggleRemoveArtistGroup(artistGroup)">Disable</button>
+                <button *ngIf="artistGroup.isDisabled" class="form-button music-taste-button" (click)="toggleRemoveArtistGroup(artistGroup)">Enable</button>
+        </div>
+    </div>
+    <button class="form-button confirm-button" (click)="saveSelection()">Save selection</button>
+</main>

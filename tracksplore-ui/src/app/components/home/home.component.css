@@ -1,0 +1,43 @@
+div.main {
+    margin: 0 auto;
+    margin-top: 230px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+div.flex {
+    align-self: flex-end;
+}
+
+.flex {
+    display: flex;
+}
+
+.tracksplore-title {
+    color: white;
+    font-family: 'Poppins';
+    font-size: 10rem;
+    letter-spacing: 10px;
+}
+
+.tracksplore-slogan {
+    text-align: right;
+    color: white;
+    font-family: 'Poppins';
+    font-size: 3rem;
+    display: inline;
+}
+
+button {
+    font-size: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background-color: var(--color-secondary);
+    border: none;
+    color: var(--color-secondary-text);
+    font-family: 'Poppins', 'sans-serif';
+    padding: 10px 20px;
+    border-radius: 100px;
+    margin-left: 20px;
+    align-self: center;
+}

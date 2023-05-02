@@ -1,0 +1,13 @@
+<main>
+    <h1 class="title">Your recommendations</h1>
+    <div class="tracks">
+        <div *ngFor="let track of tracks" class="track">
+            <div class="details">
+                <p class="track-name">{{ track.name }}</p>
+                <span class="artist-name" *ngFor="let artist of track.artists">{{ artist.name }} </span>
+            </div>
+            <div class="flex-filler"></div>
+            <button class="play-button form-button" (click)="play(track)">Play</button>
+        </div>
+    </div>
+</main>

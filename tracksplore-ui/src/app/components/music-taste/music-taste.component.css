@@ -1,0 +1,64 @@
+.tag {
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-text);
+    border-radius: 50px;
+    line-height: 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    white-space: nowrap;
+    display: inline-block;
+    font-family: 'Inter', 'sans-serif';
+}
+
+.fluid-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.music-taste {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    flex-grow: 1;
+    flex-basis: 40%;
+    padding: 40px;
+}
+
+.music-taste-title {
+    margin-bottom: 20px;
+}
+
+.music-taste-artist {
+    font-family: 'Poppins', 'sans-serif';
+    font-size: 1rem;
+}
+
+.music-taste-button {
+    align-self: flex-end;
+    color: white;
+    background-color: #333333;
+    z-index: 1000;
+}
+
+.music-taste-disabled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.music-taste, .music-taste-disabled {
+    border-radius: 10px;
+}
+
+.confirm-button {
+    margin-top: 40px;
+    font-size: 1.1rem;
+    margin-left: auto;
+}

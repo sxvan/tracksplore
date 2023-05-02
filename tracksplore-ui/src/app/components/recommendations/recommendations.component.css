@@ -1,0 +1,36 @@
+.tracks {
+    display: flex;
+    flex-direction: column;
+}
+
+.track {
+    flex-basis: 1;
+    display: flex;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    border-radius: 5px;
+}
+
+.details {
+    align-self: center;
+}
+
+.track-name {
+    font-family: 'Inter', 'sans-serif';
+}
+
+.artist-name {
+    font-family: 'Poppins', 'sans-serif';
+    font-size: smaller;
+}
+
+.play-button {
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+select {
+    margin-bottom: 40px;
+}

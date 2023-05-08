@@ -1,0 +1,64 @@
+.wrapper {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    max-width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.snackbar {
+    margin-bottom: 20px;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    display: flex;
+}
+
+.snackbar button {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.snackbar button:hover {
+    cursor: pointer;
+}
+
+.snackbar[data-type="message"] {
+    background-color: var(--color-neutral);
+    color: var(--color-neutral-text);
+}
+
+.snackbar[data-type="message"] button {
+    color: var(--color-secondary);
+}
+
+.snackbar[data-type="message"] button:hover {
+    color: var(--color-secondary-light);
+}
+
+.snackbar[data-type="success"] {
+    background-color: var(--color-success);
+    color: var(--color-success-text);
+}
+
+.snackbar[data-type="error"] {
+    background-color: var(--color-error);
+    color: var(--color-error-text);
+}
+
+.snackbar[data-type="success"] button, .snackbar[data-type="error"] button {
+    color: var(--color-primary-dark);
+}
+
+.snackbar[data-type="success"] button:hover, .snackbar[data-type="error"] button:hover {
+    color: var(--color-primary);
+}
+
+.snackbar, button {
+    font-size: 1rem;
+}

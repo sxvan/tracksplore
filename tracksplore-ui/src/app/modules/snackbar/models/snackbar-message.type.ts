@@ -1,0 +1,1 @@
+export type SnackbarMessageType = 'message' | 'success' | 'error'

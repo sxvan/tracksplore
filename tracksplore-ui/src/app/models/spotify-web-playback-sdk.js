@@ -4,7 +4,7 @@ export function connectSpotify(access_token, callback) {
         const player = new Spotify.Player({
             name: 'Tracksplore Web Player',
             getOAuthToken: cb => { cb(token); },
-            volume: 0.1
+            volume: 0.2
         });
 
         

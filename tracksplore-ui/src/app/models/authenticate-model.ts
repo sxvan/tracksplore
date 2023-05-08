@@ -1,5 +1,6 @@
-export class AuthenticateModel {
-    constructor(private identifier: string, private password: string) {
-        
-    }
+import { UserModel } from "./user-model"
+
+export interface AuthenticateModel {
+    token: string
+    user: UserModel
 }

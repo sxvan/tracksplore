@@ -1,0 +1,7 @@
+<div *ngIf="messages" class="wrapper">
+    <div *ngFor="let message of messages | async; let i = index" class="snackbar" [attr.data-type]="message.type">
+        <p>{{ message.content }}</p>
+        <div class="flex-filler"></div>
+        <button (click)="close(message.id)">{{ message.action }}</button>
+    </div>
+</div>

@@ -8,6 +8,7 @@ import { LinkSpotifyComponent } from './components/link-spotify/link-spotify.com
 import { LinkSpotifyCallbackComponent } from './components/link-spotify-callback/link-spotify-callback.component';
 import { MusicTasteComponent } from './components/music-taste/music-taste.component';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { SwipeComponent } from './components/swipe/swipe.component';
 
 const routes: Routes = [ 
   { path: 'home', component: HomeComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'link-spotify', component: LinkSpotifyComponent },
   { path: 'link-spotify-callback', component: LinkSpotifyCallbackComponent },
   { path: 'music-taste', component: MusicTasteComponent },
-  { path: 'recommendations', component: RecommendationsComponent }
+  { path: 'recommendations', component: RecommendationsComponent },
+  { path: 'swipe', component: SwipeComponent }
  ];
 
 @NgModule({

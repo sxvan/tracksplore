@@ -1,0 +1,16 @@
+<main>
+    <h1 class="title">Explore</h1>
+    <select [value]="deviceIndex" class="form-control">
+        <option *ngFor="let device of devices; let i = index;" [value]="i">{{ device.name }}</option>
+    </select>
+    <div class="track">
+        <img class="track-image" [src]="currentImage" />
+        <h2 class="track-name">{{ currentTrack.name }}</h2>
+        <p class="track-artists">{{ artists }}</p>
+        <div class="actions">
+            <span class="material-symbols-outlined swipe-left">swipe_left</span>
+            <div class="spacer"></div>
+            <span class="material-symbols-outlined swipe-right" (click)="next()">swipe_right</span>
+        </div>
+    </div>
+</main>

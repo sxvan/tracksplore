@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticateModel } from 'src/app/models/authenticate-model';
-import { AuthenticationService } from 'src/app/services/authentication-service';
+import { first, switchMap, tap } from 'rxjs';
+import { CredentialsModel } from 'src/app/models/credentials-model';
+import { SnackbarService } from 'src/app/modules/snackbar/services/snackbar.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,8 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication-service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
-
+  constructor(private snackbarService: SnackbarService, private authenticationService: AuthenticationService, private router: Router) {
+    
   }
 
   signInForm = new FormGroup({
@@ -19,22 +21,25 @@ export class SignInComponent {
     password: new FormControl('', Validators.required)
   });
 
-  get email() { return this.signInForm.get('email') }
-  get password() { return this.signInForm.get('password') }
+  get email() { return this.signInForm.get('email') as FormControl<string> }
+  get password() { return this.signInForm.get('password') as FormControl<string> }
 
-  async onSubmit() {
+  onSubmit() {
     this.signInForm.markAllAsTouched();
 
     if (!this.signInForm.valid) {
       return;
     }
 
-    const model = new AuthenticateModel(
-      this.email?.getRawValue(), 
-      this.password?.getRawValue()
-      );
+    const model: CredentialsModel = { 
+      identifier: this.email?.getRawValue(),
+      password: this.password?.getRawValue()
+    }
 
-    await this.authenticationService.authenticate(model);
-    this.router.navigate(['home']);
+    this.authenticationService.authenticate(model).pipe(
+      tap((authModel) => this.snackbarService.open({ id: 1, content: 'Welcome back ' + authModel.user.displayName, action: 'Close', durationMs: 5000 })),
+      switchMap(() => this.router.navigate(['music-taste'])),
+      first(),
+    ).subscribe();
   }
 }

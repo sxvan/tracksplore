@@ -26,7 +26,7 @@ public class AuthenticationController : ControllerBase
   }
 
   [HttpPost]
-  public IActionResult Authenticate(AuthenticateDto dto)
+  public IActionResult Authenticate(CredentialsDto dto)
   {
     User? user = this.userService.GetByEmail(dto.Identifier);
     if (user == null)
@@ -51,7 +51,7 @@ public class AuthenticationController : ControllerBase
       user.DisplayName,
       user.Id.ToString());
 
-    return Ok(new JwtTokenDto { Token = token });
+    return Ok(new AuthenticateDto { Token = token, User = UserDto.FromUser(user) });
   }
 
   [HttpPost("External")]
@@ -82,6 +82,6 @@ public class AuthenticationController : ControllerBase
       user.DisplayName,
       user.Id.ToString());
 
-    return Ok(new JwtTokenDto { Token = token });
+    return Ok(new AuthenticateDto { Token = token });
   }
 }

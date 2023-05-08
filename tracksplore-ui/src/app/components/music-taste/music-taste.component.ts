@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, tap } from 'rxjs';
 import { AddGenreFeatureModel } from 'src/app/models/add-genre-feature-model';
 import { AddMusicTasteModel } from 'src/app/models/add-music-taste-model';
 import { MusicTasteModel } from 'src/app/models/music-taste-model';
-import { SpotifyArtist } from 'src/app/models/spotify-artist';
 import { SpotifyArtistGroup } from 'src/app/models/spotify-artist-group';
-import { SpotifyGenre } from 'src/app/models/spotify-genre';
-import { MusicTasteService } from 'src/app/services/music-taste-service';
-import { SpotifyArtistGroupService } from 'src/app/services/spotify-artist-group-service';
-import { SpotifyService } from 'src/app/services/spotify-service';
+import { MusicTasteService } from 'src/app/services/music-taste.service';
+import { SpotifyArtistGroupService } from 'src/app/services/spotify-artist-group.service';
+import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
   selector: 'app-music-taste',
@@ -22,7 +20,19 @@ export class MusicTasteComponent implements OnInit {
   constructor(private spotifyService: SpotifyService, private spotifyArtistGroupService: SpotifyArtistGroupService, private musicTasteService: MusicTasteService, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
-    const musicTastes = await lastValueFrom(this.musicTasteService.get());
+    const musicTastes = await lastValueFrom(this.musicTasteService.get()).catch((err) => {
+      console.log(err);
+    });
+
+    this.musicTasteService.get().subscribe({
+      next: (response) => {
+        console.log('response: ' + response);
+      },
+      error: (err) => {
+        console.log('err: ', + err)
+      }
+    });
+
     if (musicTastes && musicTastes.length > 0) {
       this.artistGroups = await this.spotifyArtistGroupService.getArtistGroupsFromMusicTastes(musicTastes);
     } else {
@@ -35,16 +45,16 @@ export class MusicTasteComponent implements OnInit {
   }
 
   async saveSelection() {
-    const promises: Promise<MusicTasteModel>[] = []
+    const addMusicTastePromises: Promise<MusicTasteModel>[] = []
     for (let artistGroup of this.artistGroups) {
       const artistIds = artistGroup.artists.flatMap(a => a.id);
       const genreFeatures = artistGroup.relatedGenres.map(rg => new AddGenreFeatureModel(rg.name, rg.percentage))
       const model = new AddMusicTasteModel(artistIds, artistGroup.isDisabled, genreFeatures);
 
-      promises.push(lastValueFrom(this.musicTasteService.add(model)))
+      addMusicTastePromises.push(lastValueFrom(this.musicTasteService.add(model)))
     }
 
-    await Promise.all(promises);
+    await Promise.all(addMusicTastePromises);
 
     this.router.navigate(['recommendations']);
   }

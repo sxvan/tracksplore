@@ -5,8 +5,8 @@ import { SpotifyArtist } from "../models/spotify-artist";
 import { SpotifyArtistGroup } from "../models/spotify-artist-group";
 import { SpotifyGenre } from "../models/spotify-genre";
 import { SpotifyTrack } from "../models/spotify-track";
-import { SpotifyGenreService } from "./spotify-genre-service";
-import { SpotifyService } from "./spotify-service";
+import { SpotifyGenreService } from "./spotify-genre.service";
+import { SpotifyService } from "./spotify.service";
 import { MusicTasteModel } from "../models/music-taste-model";
 
 @Injectable()

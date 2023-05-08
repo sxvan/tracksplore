@@ -1,11 +1,8 @@
-export class AddUserModel {
-    constructor(
-        private displayName: string,
-        private email: string,
-        private password: string,
-        private birthDate: Date,
-        private gender: number,
-        private spotifyId: string | undefined = undefined) {
-
-    }
+export interface AddUserModel {
+    displayName: string,
+    email: string,
+    password: string,
+    birthdate: Date,
+    gender: number,
+    spotifyId: string | undefined
 }

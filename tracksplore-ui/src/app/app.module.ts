@@ -9,21 +9,23 @@ import { NavComponent } from './components/nav/nav.component';
 import { SpotifyCallbackComponent } from './components/spotify-callback/spotify-callback.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserService } from './services/user-service';
+import { UserService } from './services/user.service';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { AuthenticationService } from './services/authentication-service';
+import { AuthenticationService } from './services/authentication.service';
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { LinkSpotifyComponent } from './components/link-spotify/link-spotify.component';
 import { LinkSpotifyCallbackComponent } from './components/link-spotify-callback/link-spotify-callback.component';
 import { MusicTasteComponent } from './components/music-taste/music-taste.component';
-import { SpotifyService } from './services/spotify-service';
-import { SpotifyUserService } from './services/spotify-user-service';
-import { SpotifyArtistGroupService } from './services/spotify-artist-group-service';
-import { SpotifyGenreService } from './services/spotify-genre-service';
-import { MusicTasteService } from './services/music-taste-service';
+import { SpotifyService } from './services/spotify.service';
+import { SpotifyUserService } from './services/spotify-user.service';
+import { SpotifyArtistGroupService } from './services/spotify-artist-group.service';
+import { SpotifyGenreService } from './services/spotify-genre.service';
+import { MusicTasteService } from './services/music-taste.service';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
-import { SpotifyPlayerService } from './services/spotify-player-service';
+import { SpotifyPlayerService } from './services/spotify-player.service';
+import { SwipeComponent } from './components/swipe/swipe.component';
+import { SnackbarModule } from './modules/snackbar/snackbar.module';
+import { SpotifyInterceptor } from './interceptors/spotify-interceptor';
 
 @NgModule({
   declarations: [
@@ -33,11 +35,11 @@ import { SpotifyPlayerService } from './services/spotify-player-service';
     SpotifyCallbackComponent,
     SignUpComponent,
     SignInComponent,
-    SnackbarComponent,
     LinkSpotifyComponent,
     LinkSpotifyCallbackComponent,
     MusicTasteComponent,
     RecommendationsComponent,
+    SwipeComponent
   ],
   imports: [
     BrowserModule,
@@ -45,12 +47,11 @@ import { SpotifyPlayerService } from './services/spotify-player-service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    SnackbarModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
-    multi: true
-  },
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }, 
+    { provide: HTTP_INTERCEPTORS, useClass: SpotifyInterceptor, multi: true },
     UserService,
     AuthenticationService,
     MusicTasteService,

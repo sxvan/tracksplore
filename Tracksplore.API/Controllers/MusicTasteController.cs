@@ -12,118 +12,119 @@ namespace Tracksplore.API.Controllers;
 [ApiController]
 public class MusicTasteController : ControllerBase
 {
-  private readonly MusicTasteService musicTasteService;
-  private readonly GenreFeatureService genreFeatureService;
-  private readonly ArtistService artistService;
+    private readonly MusicTasteService musicTasteService;
+    private readonly GenreFeatureService genreFeatureService;
+    private readonly ArtistService artistService;
 
-  public MusicTasteController(
-    MusicTasteService musicTasteService,
-    GenreFeatureService genreFeatureService,
-    ArtistService artistService)
-  {
-    this.musicTasteService = musicTasteService;
-    this.genreFeatureService = genreFeatureService;
-    this.artistService = artistService;
-  }
-
-  [HttpGet]
-  public IActionResult GetAll()
-  {
-    return Ok(this.musicTasteService.GetAllByUserId(this.GetCurrentUserId()).Select(MusicTasteDto.FromMusicTaste));
-  }
-
-  [HttpPost]
-  public IActionResult Add(AddMusicTasteDto dto)
-  {
-    if (!ModelState.IsValid)
+    public MusicTasteController(
+      MusicTasteService musicTasteService,
+      GenreFeatureService genreFeatureService,
+      ArtistService artistService)
     {
-      return ValidationProblem(ModelState);
+        this.musicTasteService = musicTasteService;
+        this.genreFeatureService = genreFeatureService;
+        this.artistService = artistService;
     }
 
-    MusicTaste musicTaste = this.musicTasteService.Create();
-    musicTaste.UserId = this.GetCurrentUserId();
-    musicTaste.IsDisabled = dto.IsDisabled;
-    musicTaste.Artists = dto.ArtistIds.Select(a =>
+    [HttpGet]
+    public IActionResult GetAll()
     {
-      Artist? artist = this.artistService.GetBySpotifyId(a);
-      if (artist == null)
-      {
-        artist = this.artistService.Create();
-        artist.SpotifyId = a;
-      }
-
-      return artist;
-    }).ToHashSet();
-
-    musicTaste.GenreFeatures = dto.GenreFeatures.Select(gc =>
-    {
-      GenreFeature genreFeature = this.genreFeatureService.Create();
-      genreFeature.Genre = gc.Genre;
-      genreFeature.Percentage = gc.Percentage;
-      genreFeature.MusicTasteId = musicTaste.Id;
-      return genreFeature;
-    }).ToHashSet();
-
-    this.musicTasteService.Add(musicTaste);
-
-    return CreatedAtAction(nameof(this.Add), musicTaste);
-  }
-
-  [HttpPut]
-  public IActionResult Update(UpdateMusicTasteDto dto)
-  {
-    MusicTaste? musicTaste = this.musicTasteService.Get(dto.Id);
-    if (musicTaste == null)
-    {
-      return NotFound();
+        return Ok(this.musicTasteService.GetAllByUserId(this.GetCurrentUserId()).Select(MusicTasteDto.FromMusicTaste));
     }
 
-    if (musicTaste.UserId != this.GetCurrentUserId())
+    [HttpPost]
+    public IActionResult Add(AddMusicTasteDto dto)
     {
-      return Unauthorized();
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        MusicTaste musicTaste = this.musicTasteService.Create();
+        musicTaste.UserId = this.GetCurrentUserId();
+        musicTaste.IsDisabled = dto.IsDisabled;
+        musicTaste.Artists = dto.ArtistIds.Select(a =>
+        {
+            Artist? artist = this.artistService.GetBySpotifyId(a);
+            if (artist == null)
+            {
+                artist = this.artistService.Create();
+                artist.SpotifyId = a;
+            }
+
+            return artist;
+        }).ToHashSet();
+
+        musicTaste.GenreFeatures = dto.GenreFeatures.Select(gc =>
+        {
+            GenreFeature genreFeature = this.genreFeatureService.Create();
+            genreFeature.Genre = gc.Genre;
+            genreFeature.Percentage = gc.Percentage;
+            genreFeature.MusicTasteId = musicTaste.Id;
+            return genreFeature;
+        }).ToHashSet();
+
+        this.musicTasteService.Add(musicTaste);
+
+        return CreatedAtAction(nameof(this.Add), musicTaste);
     }
 
-    musicTaste.Artists = dto.ArtistIds.Select(a =>
+    [HttpPut]
+    public IActionResult Update(UpdateMusicTasteDto dto)
     {
-      Artist? artist = this.artistService.GetBySpotifyId(a);
-      if (artist == null)
-      {
-        artist = this.artistService.Create();
-        artist.SpotifyId = a;
-      }
+        MusicTaste? musicTaste = this.musicTasteService.Get(dto.Id);
+        if (musicTaste == null)
+        {
+            return NotFound();
+        }
 
-      return artist;
-    }).ToHashSet();
+        if (musicTaste.UserId != this.GetCurrentUserId())
+        {
+            return Unauthorized();
+        }
 
-    this.musicTasteService.Update(musicTaste);
+        musicTaste.Artists = dto.ArtistIds.Select(a =>
+        {
+            Artist? artist = this.artistService.GetBySpotifyId(a);
+            if (artist == null)
+            {
+                artist = this.artistService.Create();
+                artist.SpotifyId = a;
+            }
 
-    return Ok(musicTaste);
-  }
+            return artist;
+        }).ToHashSet();
 
-  [HttpDelete]
-  public IActionResult Delete(Guid id)
-  {
-    MusicTaste? musicTaste = this.musicTasteService.Get(id);
-    if (musicTaste  == null)
-    {
-      return NotFound();
+        musicTaste.IsDisabled = dto.IsDisabled;
+        this.musicTasteService.Update(musicTaste);
+
+        return Ok(musicTaste);
     }
 
-    if (musicTaste.UserId != this.GetCurrentUserId())
+    [HttpDelete]
+    public IActionResult Delete(Guid id)
     {
-      return Unauthorized();
-    }
+        MusicTaste? musicTaste = this.musicTasteService.Get(id);
+        if (musicTaste == null)
+        {
+            return NotFound();
+        }
 
-    if (!ModelState.IsValid)
-    {
-      return ValidationProblem(ModelState);
-    }
+        if (musicTaste.UserId != this.GetCurrentUserId())
+        {
+            return Unauthorized();
+        }
 
-    if (!this.musicTasteService.Delete(id))
-    {
-      return BadRequest();
-    }
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
 
-    return Ok();
-  }
+        if (!this.musicTasteService.Delete(id))
+        {
+            return BadRequest();
+        }
+
+        return Ok();
+    }
 }

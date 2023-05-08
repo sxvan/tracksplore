@@ -6,31 +6,44 @@
     --color-primary: #220025;
     --color-primary-light: #500057;
     --color-primary-dark: #220025;
-    --color-primary-text: #ffffff;
+    --color-primary-text: #fff;
 
     --color-secondary: #eec945;
     --color-secondary-light: #ffdf6b;
     --color-secondary-dark: #d6a800;
-    --color-secondary-text: #000000;
+    --color-secondary-text: #000;
+
+    --color-success: #1db954;
+    --color-success-text: #fff;
+
+    --color-error: #d1453b;
+    --color-error-text: #fff;
+
+    --color-neutral: #333333;
+    --color-neutral-text: #fff;
+}
+
+body {
+    background-image: url(assets/background.svg);
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 body.bg-home {
     background-image: url(assets/landing_page.svg);
 }
 
-body {
-    background-image: url(assets/background.svg);
-    background-size: cover;
-}
-
 main {
-    max-width: 800px;
-    margin: 0 auto;
     background-color: #F3F0F9;
     padding: 40px;
-    border-radius: 30px;
-    margin-top: 80px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+main.form {
+    border-radius: 20px;
+    margin-top: 80px;
 }
 
 .form-group {
@@ -89,7 +102,7 @@ input.form-control:focus-visible {
 
 .validation-error {
     font-family: 'Poppins', 'sans-serif';
-    color: red;
+    color: var(--color-error);
     font-size: 0.8rem;
 }
 
@@ -101,7 +114,7 @@ input.form-control:focus-visible {
     text-align: center;
     font-family: 'Inter', 'sans-serif';
     font-size: 3rem;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 }
 
 .flex-filler {

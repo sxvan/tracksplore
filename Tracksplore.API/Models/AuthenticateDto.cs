@@ -1,8 +1,9 @@
-namespace Tracksplore.API.Models;
-
-public class AuthenticateDto
+namespace Tracksplore.API.Models
 {
-  public string Identifier { get; set; }
+  public class AuthenticateDto
+    { 
+        public string Token { get; set; }
 
-  public string Password { get; set; }
+        public UserDto User { get; set; }
+  }
 }

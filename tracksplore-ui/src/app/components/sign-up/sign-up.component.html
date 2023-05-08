@@ -1,13 +1,13 @@
-<main>
+<main class="form">
     <h1 class="title">Create your Account</h1>
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <div class="form-field">
                 <label class="form-control">Spotify Account</label>
-                <input type="text" formControlName="spotifyAccount" class="form-control" />
+                <p *ngIf="account$ | async as account">{{ account.display_name }}</p>
             </div>
             <div class="form-field flex-bottom link-spotify">
-                <button class="form-button" (click)="navigateToSpotifyAuthorization()">Link Spotify</button>
+                <button class="form-button" (click)="redirectToSpotifyAuthorization()">Link Spotify</button>
             </div>
         </div>
         <div class="form-field">
@@ -69,5 +69,4 @@
             <button type="submit" class="form-button">Create Account</button>
         </div>
     </form>
-    <app-snackbar></app-snackbar>
 </main>

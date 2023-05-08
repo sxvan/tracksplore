@@ -41,3 +41,8 @@ button {
     margin-left: 20px;
     align-self: center;
 }
+
+button:hover {
+    background-color: var(--color-secondary-light);
+    cursor: pointer;
+}
